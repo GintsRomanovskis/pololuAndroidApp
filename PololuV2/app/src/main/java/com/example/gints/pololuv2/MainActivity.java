@@ -17,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView tViewRight;
     private TextView tView2;
     private JSONObject pololuJson;
-    private int pval = 0;
+    private int pval = 1000;
     private String jsonValue;
 
 
     //Rest api url
-    String C_REST_API_URL = "https://127.0.0.1:58580/api/values";
+    String C_REST_API_URL = "https://webhook.site/9f1cee6a-8e81-49ad-a77a-25f522e79f22";
 
     //Class elements
     CallService cs = new CallService();
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         sBarLeft = (SeekBar) findViewById(R.id.seekBarLeft);
         sBarRight = (SeekBar) findViewById(R.id.seekBarRight);
 
+        //Add start values
+        sBarLeft.setProgress(1000);
+        sBarRight.setProgress(1000);
         //Swich
 
         onOff = (Switch) findViewById(R.id.onOff);
@@ -112,21 +116,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        onOff.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View view) {
-            String statusSwitch1;
-            if (onOff.isChecked()) {
-                statusSwitch1 = onOff.getTextOn().toString();
-                jsonValue = generateJson(pval, "","on");
-                tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
-            } else
-                statusSwitch1 = onOff.getTextOff().toString();
-            jsonValue = generateJson(pval, "","off");
-            tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
+        onOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+              String statusSwitch;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    statusSwitch = onOff.getTextOn().toString();
+                    jsonValue = generateJson(pval, "","on");
+                    tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
+                } else {
+                    statusSwitch = onOff.getTextOff().toString();
+                    jsonValue = generateJson(pval, "","off");
+                    tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
 
-            Toast.makeText(getApplicationContext(), "Switch :" + statusSwitch1 + "\n" , Toast.LENGTH_LONG).show(); // display the current state for switch's
-        }
-    });
+                    Toast.makeText(getApplicationContext(), "Switch :" + statusSwitch + "\n" , Toast.LENGTH_LONG).show(); // display the current state for switch's
+                }
+            }
+        });
 
 
     }
