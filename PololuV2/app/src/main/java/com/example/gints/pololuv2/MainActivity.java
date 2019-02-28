@@ -1,17 +1,20 @@
 package com.example.gints.pololuv2;
+
 import android.support.v7.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+
 import org.json.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SeekBar sBar;
-    private Button btnLeft;
-    private Button btnRights;
-    private TextView tView;
+    private SeekBar sBarLeft;
+    private SeekBar sBarRight;
+    private Switch  onOff;
+    private TextView tViewLeft;
+    private TextView tViewRight;
     private TextView tView2;
     private JSONObject pololuJson;
     private int pval = 0;
@@ -26,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Generate json string
-    private String generateJson(int speed, String direction) {
+    private String generateJson(int speed, String direction,String onOff) {
         try {
             pololuJson.put("direction", direction);
             pololuJson.put("speed", speed);
+            pololuJson.put("on_off", onOff);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -50,22 +54,25 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Progress  Bar
-        sBar = (SeekBar) findViewById(R.id.seekBar);
+        sBarLeft = (SeekBar) findViewById(R.id.seekBarLeft);
+        sBarRight = (SeekBar) findViewById(R.id.seekBarRight);
 
-        //Buttons
-        btnLeft = (Button) findViewById(R.id.buttonLeft);
-        btnRights = (Button) findViewById(R.id.buttonRight);
+        //Swich
+
+        onOff = (Switch) findViewById(R.id.onOff);
 
         //text fields
-        tView = (TextView) findViewById(R.id.seekBarValue);
-        tView2 = (TextView) findViewById(R.id.test);
+        tViewLeft = (TextView) findViewById(R.id.seekBarLeftValue);
+        tViewRight = (TextView) findViewById(R.id.seekBarRightValue);
+
+        tView2 = (TextView) findViewById(R.id.responseText);
 
 
         //jsonObject
         pololuJson = new JSONObject();
 
 
-        sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        sBarLeft.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -79,29 +86,49 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                tView.setText(pval + "/" + seekBar.getMax());
-                jsonValue = generateJson(pval, "");
-                tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
+                tViewLeft.setText(pval + "/" + seekBar.getMax());
+                jsonValue = generateJson(pval, "","on");
+                //  tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
             }
         });
 
-        btnLeft.setOnClickListener(new View.OnClickListener() {
+        sBarRight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            public void onClick(View v) {
-                generateJson(pval, "left");
-                tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
-            }
-        });
-
-
-        btnRights.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                jsonValue = generateJson(pval, "right");
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                pval = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //write custom code to on start progress
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                tViewRight.setText(pval + "/" + seekBar.getMax());
+                jsonValue = generateJson(pval, "","on");
                 tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
-                return false;
             }
         });
+
+        onOff.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View view) {
+            String statusSwitch1;
+            if (onOff.isChecked()) {
+                statusSwitch1 = onOff.getTextOn().toString();
+                jsonValue = generateJson(pval, "","on");
+                tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
+            } else
+                statusSwitch1 = onOff.getTextOff().toString();
+            jsonValue = generateJson(pval, "","off");
+            tView2.setText(cs.doInBackground(jsonValue, C_REST_API_URL));
+
+            Toast.makeText(getApplicationContext(), "Switch :" + statusSwitch1 + "\n" , Toast.LENGTH_LONG).show(); // display the current state for switch's
+        }
+    });
+
+
     }
 
 }
