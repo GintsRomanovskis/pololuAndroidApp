@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tViewLeft,tViewRight,responseView;
     private EditText  ipAddressEditText;
     private JSONObject pololuJson;
-    private int leftSpeed = 1000;
-    private int rightSpeed = 1000;
+    private int leftSpeed = 0;
+    private int rightSpeed = 0;
     private String jsonValue;
     private JSONArray jsonArry;
     private boolean deviceIsOn;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             pololuJson.put("stop_start", stop_start);
             pololuJson.put("connection", connectToDevice);
             jsonValue = pololuJson.toString();
-            jsonValue = "{\"controls\":" + pololuJson.toString() + "}";
+            jsonValue =  pololuJson.toString();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
              public void onStopTrackingTouch(SeekBar seekBar) {
                  if (deviceIsOn != false) {
                      tViewLeft.setText(leftSpeed + "/" + seekBar.getMax());
-                     jsonValue = generateJson(leftSpeed, "left", "on","connect");
+                     jsonValue = generateJson(leftSpeed, "left", "","connect");
                      responseView.setText(cs.doInBackground(jsonValue, ipAdress));
                  } else {
                      Toast.makeText(getApplicationContext(), "Please turn on device!", Toast.LENGTH_LONG).show(); // display the current state for switch's
@@ -156,10 +156,13 @@ public class MainActivity extends AppCompatActivity {
          stop.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (deviceIsOn != false)
-                jsonValue = generateJson(leftSpeed, "", "stop","connect");
-                responseView.setText(cs.doInBackground(jsonValue, ipAdress));
+                if (deviceIsOn != false) {
+                    jsonValue = generateJson(leftSpeed, "", "stop", "connect");
+                    responseView.setText(cs.doInBackground(jsonValue, ipAdress));
 
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please turn on device!", Toast.LENGTH_LONG).show(); // display the current state for switch's
+                }
             }});
 
         resume.setOnClickListener(new View.OnClickListener(){
@@ -168,8 +171,10 @@ public class MainActivity extends AppCompatActivity {
                 if (deviceIsOn != false) {
                     jsonValue = generateJson(leftSpeed, "", "resume", "connect");
                     responseView.setText(cs.doInBackground(jsonValue, ipAdress));
-
-                }}});
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please turn on device!", Toast.LENGTH_LONG).show(); // display the current state for switch's
+                }
+            }});
 
          sBarRight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -187,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
              public void onStopTrackingTouch(SeekBar seekBar) {
                  if (deviceIsOn != false){
                  tViewRight.setText(rightSpeed + "/" + seekBar.getMax());
-                 jsonValue = generateJson(rightSpeed, "right", "on","connect");
+                 jsonValue = generateJson(rightSpeed, "right", "","connect");
                  responseView.setText(cs.doInBackground(jsonValue, ipAdress));
              }
              else{
@@ -204,12 +209,12 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     statusSwitch = "Connected";
-                    jsonValue = generateJson(5, "", "on","connect");
+                    jsonValue = generateJson(5, "", "","connect");
                     responseView.setText(cs.doInBackground(jsonValue, ipAdress));
                     deviceIsOn = true;
                 } else {
                     statusSwitch = "Disconnected";
-                    jsonValue = generateJson(0, "", "off","discconnect");
+                    jsonValue = generateJson(0, "", "","discconnect");
                     responseView.setText(cs.doInBackground(jsonValue, ipAdress));
                     deviceIsOn = false;
                     Toast.makeText(getApplicationContext(), "Switch :" + statusSwitch + "\n", Toast.LENGTH_LONG).show();
