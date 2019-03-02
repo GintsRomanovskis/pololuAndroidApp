@@ -58,5 +58,45 @@ namespace PololuApi.PololuClasses
                 device.stop();
             }
         }
+
+        public void resume(List<DeviceListItem> deviceList)
+        {
+            try
+            {
+                // Find a device and temporarily connect.
+                foreach (var dev in deviceList)
+                {
+                    Smc device = new Smc(dev);
+
+                    device.setSpeed(50);
+                    device.resume();
+                }
+            }
+            catch (Exception exception)  // Handle exceptions by displaying them to the user.
+            {
+                //ex
+            }
+        }
+
+        public void disconect(List<DeviceListItem> deviceList)
+        {
+            try
+            {
+                // Find a device and temporarily connect.
+                foreach (var dev in deviceList)
+                {
+                    Smc device = new Smc(dev);
+
+                    device.disconnect();
+                    
+                }
+            }
+            catch (Exception exception)  // Handle exceptions by displaying them to the user.
+            {
+                //ex
+            }
+        }
     }
+
+
 }

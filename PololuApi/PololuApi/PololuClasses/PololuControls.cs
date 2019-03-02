@@ -11,7 +11,7 @@ namespace PololuApi.PololuClasses
               
         public string direction { get; set; }
         public int speed { get; set; }
-        public string on_off { get; set; }
+        public string stopResume { get; set; }
         public string connection { get; set; }
      
         }        

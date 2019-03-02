@@ -29,7 +29,7 @@ namespace PololuApi.PololuClasses.Connection
         }
 
 
-        public  List<DeviceListItem> getConnectedDevices()
+        public List<DeviceListItem> getConnectedDevices()
         {
             
             try
