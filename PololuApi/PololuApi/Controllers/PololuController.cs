@@ -48,23 +48,39 @@ namespace PololuApi.Controllers
                     {
                         if (controls.direction == "left" && listOfConnectedDevices[0].serialNumber != null && controls.on_off != "off")
                         {
-                            Smc deviceLeftSide = new Smc(listOfConnectedDevices[0]);
-                            controlDevice.setSpeedLeft(deviceLeftSide, (short)controls.speed);
+                            try
+                            {
+                                Smc deviceLeftSide = new Smc(listOfConnectedDevices[0]);
+                                controlDevice.setSpeedLeft(deviceLeftSide, (short)controls.speed);
+                            }
+                            catch (Exception error)
+                            {
 
+                                return  "Left side controler exception" +error;
+                            }
+                                                  
                         }
                         if (controls.direction == "right" && listOfConnectedDevices[1].serialNumber != null && controls.on_off != "off")
                         {
-                            Smc deviceRightSide = new Smc(listOfConnectedDevices[0]);
-                            controlDevice.setSpeedLeft(deviceRightSide, (short)controls.speed);
+                            try
+                            {
+                                Smc deviceRightSide = new Smc(listOfConnectedDevices[1]);
+                                controlDevice.setSpeedLeft(deviceRightSide, (short)controls.speed);
+                            }
+                            catch (Exception error)
+                            {
 
+                               return "Right side exception" + error;
+                            }
+                          
                         }
-                        return "Tika atrastas ierices" + listOfConnectedDevices.Count;
+                     
                     }
-                    return "Tika atrastas ierices";
+                    return "Found devices: " + listOfConnectedDevices.Count; ;
                 }
                 else
                 {
-                    return "Nav Atrastas ierices";
+                    return "There are no connected devices found ";
 
                 }
             }

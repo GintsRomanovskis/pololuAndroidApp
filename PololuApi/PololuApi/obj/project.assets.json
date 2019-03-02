@@ -12575,11 +12575,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gints\\source\\repos\\PololuApi\\PololuApi\\PololuApi.csproj",
+      "projectUniqueName": "C:\\git\\pololuAndroidApp\\PololuApi\\PololuApi\\PololuApi.csproj",
       "projectName": "PololuApi",
-      "projectPath": "C:\\Users\\gints\\source\\repos\\PololuApi\\PololuApi\\PololuApi.csproj",
+      "projectPath": "C:\\git\\pololuAndroidApp\\PololuApi\\PololuApi\\PololuApi.csproj",
       "packagesPath": "C:\\Users\\gints\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gints\\source\\repos\\PololuApi\\PololuApi\\obj\\",
+      "outputPath": "C:\\git\\pololuAndroidApp\\PololuApi\\PololuApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
