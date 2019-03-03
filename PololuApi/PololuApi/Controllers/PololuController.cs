@@ -20,15 +20,13 @@ namespace PololuApi.Controllers
         public List<DeviceListItem> listOfConnectedDevices;
         public List<DeviceListItem> connectedDevices;
         PololuControlActions controlDevice;
-
-
+        
         // GET: api/Pololu
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "Connection", "200 ok" };
         }
-
 
         // POST: api/Pololu
         [HttpPost]
@@ -38,18 +36,16 @@ namespace PololuApi.Controllers
             connectedDevices = conn.getConnectedDevices();
             controlDevice = new PololuControlActions();
             connect = conn.connect(controls.connection);
-
-
+            
             if (connect == true)
             {
                 try
-                {
-                
+                {                
                     if (connectedDevices.Count > 0)
                     {
                         listOfConnectedDevices = conn.connectDevice(connectedDevices);
 
-                        if (listOfConnectedDevices[0].serialNumber != null)
+                        if (true)
                         {
                             if (controls.direction == "left" && listOfConnectedDevices[0].serialNumber != null && controls.stopResume.Length <= 0)
                             {
@@ -78,7 +74,6 @@ namespace PololuApi.Controllers
                                     return "Right side exception " + error;
                                 }
                             }
-
                         }                     
                         
                         //if json send command  off then method stop all conected devices
@@ -92,10 +87,8 @@ namespace PololuApi.Controllers
                             }
                             catch (Exception error)
                             {
-
                                 return "Error on stop device" + error.Message;
                             }
-
                         }
                         if ((controls.stopResume != "stop" && listOfConnectedDevices.Count > 0) && controls.stopResume == "resume")
                         {
@@ -106,12 +99,9 @@ namespace PololuApi.Controllers
                             }
                             catch (Exception error)
                             {
-
                                 return "Error on resuming device" + error.Message;
                             }
-
-
-                        }
+                                                                               }
                         return "Found devices: " + listOfConnectedDevices.Count;
                     }
                     else
@@ -123,16 +113,11 @@ namespace PololuApi.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-
             }
             else {
-
-
                 controlDevice.disconect(listOfConnectedDevices);
                 return "Device disconnected";
             }
-
-
         }
 
     }

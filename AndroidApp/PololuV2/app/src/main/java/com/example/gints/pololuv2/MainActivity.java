@@ -126,9 +126,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
          sBarLeft.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
              @Override

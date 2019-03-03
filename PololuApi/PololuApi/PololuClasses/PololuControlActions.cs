@@ -21,6 +21,7 @@ namespace PololuApi.PololuClasses
             }
             catch (Exception exception)  // Handle exceptions by displaying them to the user.
             {
+                Console.WriteLine(exception.Message);
                 device.stop();
             }
         }
@@ -33,13 +34,12 @@ namespace PololuApi.PololuClasses
                 foreach (var dev in deviceList)
                 {
                     Smc device = new Smc(dev);
-
                     device.stop();
                 }
             }
             catch (Exception exception)  // Handle exceptions by displaying them to the user.
             {
-               //ex
+                Console.WriteLine(exception.Message);
             }
         }
 
@@ -55,6 +55,7 @@ namespace PololuApi.PololuClasses
             }
             catch (Exception exception)  // Handle exceptions by displaying them to the user.
             {
+                Console.WriteLine(exception.Message);
                 device.stop();
             }
         }
@@ -72,9 +73,9 @@ namespace PololuApi.PololuClasses
                     device.resume();
                 }
             }
-            catch (Exception exception)  // Handle exceptions by displaying them to the user.
+            catch (Exception  error)  // Handle exceptions by displaying them to the user.
             {
-                //ex
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -91,9 +92,9 @@ namespace PololuApi.PololuClasses
                     
                 }
             }
-            catch (Exception exception)  // Handle exceptions by displaying them to the user.
+            catch (Exception error)  // Handle exceptions by displaying them to the user.
             {
-                //ex
+                Console.WriteLine(error.Message);
             }
         }
     }

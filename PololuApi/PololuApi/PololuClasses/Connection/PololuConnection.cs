@@ -27,8 +27,7 @@ namespace PololuApi.PololuClasses.Connection
             }
 
         }
-
-
+        
         public List<DeviceListItem> getConnectedDevices()
         {
             
@@ -47,15 +46,12 @@ namespace PololuApi.PololuClasses.Connection
             catch (Exception e)
             {
                 throw new Exception("There was an error getting the list of connected devices.", e);
-            }
-
-            
+            }            
             return devices;
         }
 
         public List<DeviceListItem> connectDevice(List<DeviceListItem> devicelist)
-        {
-            
+        {          
              
                 foreach (DeviceListItem dli in devicelist)
                 {
@@ -77,8 +73,6 @@ namespace PololuApi.PololuClasses.Connection
                 }
                 throw new Exception("Could not find device.  Make sure it is plugged in to USB " +
                     "and check your Device Manager (Windows) or run lsusb (Linux).");
-            }
-
-        
+            }        
     }
 }
