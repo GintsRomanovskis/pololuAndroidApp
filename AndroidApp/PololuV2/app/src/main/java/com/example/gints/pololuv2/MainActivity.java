@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
             pololuJson.put("direction", direction);
             pololuJson.put("speed", speed);
-            pololuJson.put("stop_start", stop_start);
+            pololuJson.put("stopResume", stop_start);
             pololuJson.put("connection", connectToDevice);
             jsonValue = pololuJson.toString();
             jsonValue =  pololuJson.toString();
