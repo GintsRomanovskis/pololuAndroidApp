@@ -11,7 +11,7 @@ import org.json.*;
 public class MainActivity extends AppCompatActivity {
 
     //Rest api url and constant values
-    String C_REST_API_URL = "https://webhook.site/9f1cee6a-8e81-49ad-a77a-25f522e79f22";
+    String C_REST_API_URL = "http://10.41.121.55:5000/api/controls";
     int C_HALF_OF_SEEKBAR = 1000;
 
     //Class elements
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     statusSwitch = "Connected";
-                    jsonValue = generateJson(5, "", "","connect");
+                    jsonValue = generateJson(0, "left", "","connect");
                     responseView.setText(cs.doInBackground(jsonValue, ipAdress));
                     deviceIsOn = true;
                 } else {
